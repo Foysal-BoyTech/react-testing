@@ -6,13 +6,21 @@ export default function Counter() {
   const [inputValue, setInputValue] = useState(1)
 
   const handleChange = (e) => {
-    setInputValue(e.target.value)
+    setInputValue(parseInt(e.target.value))
+  }
+  const addToCounter = () => {
+    setCounterValue(counterValue + inputValue)
+  }
+  const subtractFromCounter = () => {
+    setCounterValue(counterValue - inputValue)
   }
   return (
     <div>
       <h2 data-testid="header">My Counter</h2>
       <h2 data-testid="counter">{counterValue}</h2>
-      <button data-testid="substract-btn">-</button>
+      <button data-testid="subtract-btn" onClick={subtractFromCounter}>
+        -
+      </button>
       <input
         data-testid="input"
         type="number"
@@ -21,7 +29,9 @@ export default function Counter() {
         onChange={handleChange}
         className="text-center"
       />
-      <button data-testid="add-btn">+</button>
+      <button data-testid="add-btn" onClick={addToCounter}>
+        +
+      </button>
     </div>
   )
 }
