@@ -1,8 +1,48 @@
-import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../state/index'
+
+import styled from 'styled-components'
 import './Counter.css'
+
+const Wrapper = styled.section`
+  background: papayawhip;
+  height: 20em;
+  width: 30em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`
+
+const Button = styled.button`
+  background: ${(props) => (props.primary ? 'palevioletred' : 'white')};
+  color: ${(props) => (props.primary ? 'white' : 'palevioletred')};
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`
+const Input = styled.input.attrs((props) => ({
+  // we can define static props
+  type: 'number',
+
+  // or we can define dynamic ones
+  size: props.size || '.3em',
+}))`
+  color: palevioletred;
+  font-size: 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  margin: ${(props) => props.size};
+  padding: ${(props) => props.size};
+`
 
 export default function Counter() {
   // const [inputValue, setInputValue] = useState(1)
@@ -17,7 +57,6 @@ export default function Counter() {
   //   setInputValue(parseInt(e.target.value))
   // }
 
-  console.log(inputChange)
   // const addToCounter = () => {
   //   setCounterValue(counterValue + inputValue)
   // }
@@ -28,24 +67,24 @@ export default function Counter() {
   const inputValue = useSelector((state) => state.input)
 
   return (
-    <div>
-      <h2 data-testid="header">My Counter</h2>
-      <h2
+    <Wrapper>
+      <Title data-testid="header">My Counter</Title>
+      <Title
         data-testid="counter"
         className={`${counter >= 100 ? 'green' : ''} ${
           counter <= -100 ? 'red' : ''
         }`}
       >
         {counter}
-      </h2>
+      </Title>
 
-      <button
+      <Button
         data-testid="subtract-btn"
         onClick={() => subtractNumber(inputValue)}
       >
         -
-      </button>
-      <input
+      </Button>
+      <Input
         data-testid="input"
         type="number"
         value={inputValue}
@@ -53,9 +92,13 @@ export default function Counter() {
         onChange={(e) => inputChange(e)}
         className="text-center"
       />
-      <button data-testid="add-btn" onClick={() => addNumber(inputValue)}>
+      <Button
+        primary
+        data-testid="add-btn"
+        onClick={() => addNumber(inputValue)}
+      >
         +
-      </button>
-    </div>
+      </Button>
+    </Wrapper>
   )
 }
