@@ -1,36 +1,45 @@
 import React, { useState } from 'react'
-import {useSelector} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../state/index'
 import './Counter.css'
 
 export default function Counter() {
-  const [counterValue, setCounterValue] = useState(0)
   const [inputValue, setInputValue] = useState(1)
+
+  const dispatch = useDispatch()
+  const { addNumber, subtractNumber } = bindActionCreators(
+    actionCreators,
+    dispatch,
+  )
 
   const handleChange = (e) => {
     setInputValue(parseInt(e.target.value))
   }
-  const addToCounter = () => {
-    setCounterValue(counterValue + inputValue)
-  }
-  const subtractFromCounter = () => {
-    setCounterValue(counterValue - inputValue)
-   
-  }
+  // const addToCounter = () => {
+  //   setCounterValue(counterValue + inputValue)
+  // }
+  // const subtractFromCounter = () => {
+  //   setCounterValue(counterValue - inputValue)
+  // }
   const counter = useSelector((state) => state.counter)
-  console.log(counter)
+
   return (
     <div>
       <h2 data-testid="header">My Counter</h2>
       <h2
         data-testid="counter"
-        className={`${counterValue >= 100 ? 'green' : ''} ${
-          counterValue <= -100 ? 'red' : ''
+        className={`${counter >= 100 ? 'green' : ''} ${
+          counter <= -100 ? 'red' : ''
         }`}
       >
-        {counterValue}
+        {counter}
       </h2>
 
-      <button data-testid="subtract-btn" onClick={subtractFromCounter}>
+      <button
+        data-testid="subtract-btn"
+        onClick={() => subtractNumber(inputValue)}
+      >
         -
       </button>
       <input
@@ -41,7 +50,7 @@ export default function Counter() {
         onChange={handleChange}
         className="text-center"
       />
-      <button data-testid="add-btn" onClick={addToCounter}>
+      <button data-testid="add-btn" onClick={() => addNumber(inputValue)}>
         +
       </button>
     </div>
