@@ -5,17 +5,19 @@ import { actionCreators } from '../state/index'
 import './Counter.css'
 
 export default function Counter() {
-  const [inputValue, setInputValue] = useState(1)
+  // const [inputValue, setInputValue] = useState(1)
 
   const dispatch = useDispatch()
-  const { addNumber, subtractNumber } = bindActionCreators(
+  const { addNumber, subtractNumber, inputChange } = bindActionCreators(
     actionCreators,
     dispatch,
   )
 
-  const handleChange = (e) => {
-    setInputValue(parseInt(e.target.value))
-  }
+  // const handleChange = (e) => {
+  //   setInputValue(parseInt(e.target.value))
+  // }
+
+  console.log(inputChange)
   // const addToCounter = () => {
   //   setCounterValue(counterValue + inputValue)
   // }
@@ -23,6 +25,7 @@ export default function Counter() {
   //   setCounterValue(counterValue - inputValue)
   // }
   const counter = useSelector((state) => state.counter)
+  const inputValue = useSelector((state) => state.input)
 
   return (
     <div>
@@ -47,7 +50,7 @@ export default function Counter() {
         type="number"
         value={inputValue}
         name="input"
-        onChange={handleChange}
+        onChange={(e) => inputChange(e)}
         className="text-center"
       />
       <button data-testid="add-btn" onClick={() => addNumber(inputValue)}>

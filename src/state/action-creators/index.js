@@ -15,3 +15,12 @@ export const subtractNumber = (counter) => {
     })
   }
 }
+
+export const inputChange = (e) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'handleChange',
+      payload: parseInt(e.target.value),
+    })
+  }
+}
