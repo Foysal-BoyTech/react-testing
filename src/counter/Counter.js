@@ -2,7 +2,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../state/index'
 
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
 import './Counter.css'
 
 const Wrapper = styled.section`
@@ -42,6 +43,25 @@ const Input = styled.input.attrs((props) => ({
   border-radius: 3px;
   margin: ${(props) => props.size};
   padding: ${(props) => props.size};
+`
+
+// Create the keyframes
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+// Here we create a component that will rotate everything we pass in over two seconds
+const Rotate = styled.div`
+  display: inline-block;
+  animation: ${rotate} 5s linear infinite;
+  padding: 2rem 1rem;
+  font-size: 1.2rem;
 `
 
 export default function Counter() {
@@ -99,6 +119,7 @@ export default function Counter() {
       >
         +
       </Button>
+      <Rotate>&lt; 🤣🤣 &gt;</Rotate>
     </Wrapper>
   )
 }
